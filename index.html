@@ -22,6 +22,40 @@
   <a class="navbar-brand" href="#">COVID-19 Vaccination Dashboard</a>
 </nav>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">About the project</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>This is a course project for MSBD5005 Data Visualization (2020-2021 Academic Year). Showing the global progress of the COVID-19 Vaccination.</p>
+        <p>Data Sources</p>
+        <ul>
+          <li>COVID-19 World Vaccination Progress - <a href="https://www.kaggle.com/gpreda/covid-world-vaccination-progress">Kaggle</a></li>
+          <li>COVID-19 TREATMENT AND VACCINE TRACKER - <a href="https://milkeninstitute.org/centers/fastercures">FasterCures @ Milken Institute</a></li>
+          <li>COVAX first round of allocations - <a href="https://www.who.int/news/item/02-03-2021-covax-publishes-first-round-of-allocations">WHO</a></li>
+        </ul>
+        <p>Tools: D3.js, split.js, Bootstrap, Python</p>
+        <p>Group Members</p>
+        <ul>
+          <li>WU Zhenghao</li>
+          <li>GU Xianggao</li>
+          <li>XING Zhenghao</li>
+          <li>USMANI Muhammad Adam</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container-fluid px-0">
   <div id="top-row" class=" d-flex">
     <div id="tlh-col" class=" split content">
@@ -72,7 +106,7 @@
             </a>
           </li>
           <li>
-            <a href="#" class="nav-link text-dark">
+            <a href="#" class="nav-link text-dark" data-toggle="modal" data-target="#exampleModal">
               <svg class="bi d-block mx-auto mb-1" width="24" height="24"><svg id="people-circle" viewBox="0 0 16 16">
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"></path>
