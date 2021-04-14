@@ -1,0 +1,26 @@
+[
+  {
+    "VaccineType": "NucleicAcid",
+    "ProductCategory": "DNA",
+    "DevelopmentStage": "Pre-Clinical",
+    "No.Vaccines": 10
+  },
+  {
+    "VaccineType": "WholeVirus",
+    "ProductCategory": "InactivatedVirus",
+    "DevelopmentStage": "Pre-Clinical",
+    "No.Vaccines": 25
+  },
+  {
+    "VaccineType": "ProteinSubunit",
+    "ProductCategory": "Protein-BasedSubunit",
+    "DevelopmentStage": "Pre-Clinical",
+    "No.Vaccines": 17
+  },
+  {
+    "VaccineType": "ViralVector",
+    "ProductCategory": "ViralVector,Replicating",
+    "DevelopmentStage": "Pre-Clinical",
+    "No.Vaccines": 5
+  }
+]
