@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous" />
+</head>
+<body>
+<div id="map"></div>
+<!-- <div id="detail"></div> -->
+
+<div id="hover">
+  <div class="card">
+  <div class="card-header" id="nation-name">
+    National
+  </div>
+  <div class="card-body">
+    <div id="detail" style="width: 200px;"></div>
+  </div>
+</div></div>
+
+
+<!-- Introduce online resources, select the g2 version you need and replace the version variable -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js" integrity="sha512-XKa9Hemdy1Ui3KSGgJdgMyYlUg1gM+QhL6cnlyTe2qzMCYm4nAZ1PsVerQzTTXzonUR+dmswHqgJPuwCq1MaAg==" crossorigin="anonymous"></script>
+<script src="https://gw.alipayobjects.com/os/lib/antv/g2/4.1.13/dist/g2.min.js"></script>
+<script src="https://unpkg.com/@antv/data-set"></script>
+<script>
+  fetch('https://gw.alipayobjects.com/os/antvdemo/assets/data/world.geo.json')
+  .then(res => res.json())
+  .then(mapData => {
+    const chart = new G2.Chart({
+      container: 'map',
+      autoFit: true,
+      height: 700,
+    });
+    chart.tooltip({
+      showTitle: false,
+      showMarkers: false,
+      shared: true,
+    });
+    // 同步度量
+    chart.scale({
+      longitude: {
+        sync: true
+      },
+      latitude: {
+        sync: true
+      }
+    });
+    chart.axis(false);
+    chart.legend('trend', {
+      position: 'right'
+    });
+
+    chart.on('element:click', (ev) => {
+      $("#hover").css({ 
+          position: "absolute",
+          marginLeft: 0, marginTop: 0,
+          top: ev.y, left: ev.x
+      }).show()
+      $("#detail").html("")
+      $("#nation-name").html(ev.data.data.name)
+      const data = [
+        { year: '1951 年', sales: 38 },
+        { year: '1952 年', sales: 52 },
+        { year: '1956 年', sales: 61 },
+        { year: '1957 年', sales: 145 },
+        { year: '1958 年', sales: 48 },
+        { year: '1959 年', sales: 38 },
+        { year: '1960 年', sales: 38 },
+        { year: '1962 年', sales: 38 },
+      ];
+
+      const chart = new G2.Chart({
+        container: 'detail',
+        autoFit: true,
+        height: 150,
+      });
+
+      chart.data(data);
+      chart.scale('sales', {
+        nice: true,
+      });
+
+      chart.tooltip({
+        showMarkers: false
+      });
+      chart.interaction('active-region');
+
+      chart.interval().position('year*sales');
+
+      chart.render(isUpdate=true);
+    })
+
+    chart.on('element:mouseover', (ev) => {
+      $("#hover").hide()
+    })
+
+    // 绘制世界地图背景
+    const ds = new DataSet();
+
+    const worldMap = ds.createView('back')
+      .source(mapData, {
+        type: 'GeoJSON'
+      });
+    const worldMapView = chart.createView();
+    worldMapView.data(worldMap.rows);
+    worldMapView.tooltip(false);
+    worldMapView.polygon().position('longitude*latitude').style({
+      fill: '#fff',
+      stroke: '#ccc',
+      lineWidth: 1
+    });
+
+    // 可视化用户数据
+    const userData = [
+      { name: 'Russia', value: 86.8, vacc: 111 },
+      { name: 'China', value: 106.3, vacc: 222},
+      { name: 'Indonesia', value: 101.4, vacc: 333 }
+    ];
+
+    const userDv = ds.createView()
+      .source(userData)
+      .transform({
+        geoDataView: worldMap,
+        field: 'name',
+        type: 'geo.region',
+        as: ['longitude', 'latitude']
+      });
+
+    console.log(userDv.rows);
+    
+    const userView = chart.createView();
+    userView.data(userDv.rows);
+    userView.scale({
+      name: {
+        alias: 'Country / Region'
+      }
+    });
+    userView.scale({
+      value: {
+        alias: 'Cases'
+      }
+    });
+    userView.scale({
+      vacc: {
+        alias: 'Vaccination'
+      }
+    });
+    userView.polygon()
+      .position('longitude*latitude')
+      .color('vacc', ['#F51D27', '#0A61D7'])
+      .tooltip('name*vacc*value')
+      .style({
+        fillOpacity: 0.85
+      })
+      .animate({
+        leave: {
+          animation: 'fade-out'
+        }
+      });
+    userView.interaction('element-highlight');
+    
+    //test
+    // const userData2 = [
+    //   { name: 'China', value: 16.8, time: 1, type: "case" },
+    //   { name: 'China', value: 26.8, time: 2, type: "case" },
+    //   { name: 'China', value: 36.8, time: 3, type: "case" },
+    //   { name: 'China', value: 86.8, time: 1, type: "vacc" },
+    //   { name: 'China', value: 96.8, time: 2, type: "vacc" },
+    //   { name: 'China', value: 56.8, time: 3, type: "vacc" },
+    // ];
+
+    // const userDv2 = ds.createView()
+    //   .source(userData2)
+    //   .transform({
+    //     geoDataView: worldMap,
+    //     field: 'name',
+    //     type: 'geo.region',
+    //     as: ['longitude', 'latitude']
+    //   });
+
+    // console.log(userDv2.rows);
+
+    // const detail = chart.createView();
+    // detail.data(userDv2.rows);
+    // detail.line().position('time*value').color('type');
+    
+    // detail.scale({
+    //   time: {
+    //     range: [0, 1],
+    //   },
+    //   value: {
+    //     nice: true,
+    //   },
+    // });
+    
+    // detail.tooltip({
+    //   showCrosshairs: true,
+    //   shared: true,
+    // });
+
+    // detail
+    //   .point()
+    //   .position('time*value')
+    //   .color('type')
+    //   .shape('circle')
+    //   .style({
+    //     stroke: '#fff',
+    //     lineWidth: 1,
+    //   });
+    // detail.interaction('element-single-selected',{
+    //   start: [{ trigger: 'element:click', action: 'element-highlight:highlight' }],
+    //   end: [{ trigger: 'element:mouseleave', action: 'element-highlight:reset' }],
+    // });
+    // console.log("haha");
+
+    chart.render();
+  });
+</script>
+</body>
+</html>

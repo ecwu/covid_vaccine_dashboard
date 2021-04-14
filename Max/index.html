@@ -60,8 +60,6 @@ d3.queue()
           vaccine_total: d.total_vaccinations
         }]
       }
-
-      // covid.push();
     }
   )
   .await(ready);
@@ -96,7 +94,6 @@ function ready(error, topo) {
     }else{
       $("#description").html(d.properties.name + ": UNDEFINED")
     }
-    
   }
 
   let mouseLeave = function(d) {
