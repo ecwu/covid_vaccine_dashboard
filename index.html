@@ -59,24 +59,29 @@
 <div class="container-fluid px-0">
   <div id="top-row" class="d-flex">
     <div id="tlh-col" class="split content">
-      <div id="progress-view" class="full-size">
+      <div id="home-view" class="full-size">
         <div class="d-flex full-size">
           <img src="percentage-of-vaccinatio.svg" class="img-fluid" alt="Responsive image">
         </div>
       </div>
+      <div id="progress-view" class="d-none full-size">
+          <div id="c2" class="full-size"></div>
+      </div>
       <div id="distribution-view" class="d-none full-size">
         <nav>
           <div class="nav nav-tabs" id="nav-dist-tab" role="tablist">
-            <a class="nav-link active" id="nav-dist-continent-tab" data-toggle="tab" href="#nav-dist-continent" role="tab" aria-controls="nav-dist-continent" aria-selected="true">Continent</a>
-            <a class="nav-link" id="nav-dist-treemap-tab" data-toggle="tab" href="#nav-dist-treemap" role="tab" aria-controls="nav-dist-treemap" aria-selected="false">Treemap</a>
+            <a class="nav-link active" id="nav-dist-continent-tab" data-toggle="tab" href="#nav-dist-continent" role="tab" aria-controls="nav-dist-continent" aria-selected="true" onclick="draw_dist_cont();">Continent</a>
+            <a class="nav-link" id="nav-dist-treemap-tab" data-toggle="tab" href="#nav-dist-treemap" role="tab" aria-controls="nav-dist-treemap" aria-selected="false" onclick="draw_tree_map();">Treemap</a>
           </div>
         </nav>
         <div class="tab-content" id="nav-dist-tabContent" style="width: 100%">
           <div class="tab-pane fade show active" id="nav-dist-continent" role="tabpanel" aria-labelledby="nav-home-tab">
-            <img src="https://source.unsplash.com/random" class="img-fluid mx-auto d-block" alt="Responsive image">
+<!--            <img src="https://source.unsplash.com/random" class="img-fluid mx-auto d-block" alt="Responsive image">-->
+            <div id="distribution-continent"></div>
           </div>
           <div class="tab-pane fade" id="nav-dist-treemap" role="tabpanel" aria-labelledby="nav-profile-tab">
-            <img src="https://source.unsplash.com/user/erondu" class="img-fluid mx-auto d-block" alt="Responsive image">
+            <div id="distribution-treemap"></div>
+<!--            <img src="https://source.unsplash.com/user/erondu" class="img-fluid mx-auto d-block" alt="Responsive image">-->
           </div>
         </div>
       </div>
@@ -109,7 +114,7 @@
       <div class="d-flex flex-wrap">
         <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
           <li>
-            <a href="#" class="nav-link text-dark">
+            <a href="#" class="nav-link text-dark" onclick="switchView('home-view')">
               <svg class="bi d-block mx-auto mb-1" width="24" height="24"><svg id="home" viewBox="0 0 16 16">
                 <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"></path>
               </svg></svg>
@@ -117,7 +122,7 @@
             </a>
           </li>
           <li>
-            <a href="#" class="nav-link text-dark" onclick="switchView('progress-view')">
+            <a href="#" class="nav-link text-dark" onclick="switchView('progress-view'); draw_overtrend();">
               <svg class="bi d-block mx-auto mb-1" width="24" height="24"><svg id="speedometer2" viewBox="0 0 16 16">
                 <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4zM3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.389.389 0 0 0-.029-.518z"></path>
                 <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A7.988 7.988 0 0 1 0 10zm8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3z"></path>
@@ -127,7 +132,7 @@
           </li>
           <li>
             <div class="dropdown">
-            <a href="#" class="nav-link text-dark" onclick="switchView('distribution-view')">
+            <a href="#" class="nav-link text-dark" onclick="switchView('distribution-view'); draw_dist_cont();">
               <svg class="bi d-block mx-auto mb-1" width="24" height="24"><svg id="table" viewBox="0 0 16 16">
                 <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"></path>
               </svg></svg>
@@ -137,7 +142,7 @@
           </li>
           <li>
             <div class="dropdown">
-            <a href="#" class="nav-link text-dark" onclick="switchView('solution-view')">
+            <a href="#" class="nav-link text-dark" onclick="switchView('solution-view');">
               <svg class="bi d-block mx-auto mb-1" width="24" height="24"><svg id="grid" viewBox="0 0 16 16">
                 <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"></path>
               </svg></svg>
@@ -178,6 +183,315 @@
 
 <script src="assets/script.js"></script>
 
+<script src="https://gw.alipayobjects.com/os/lib/antv/g2/4.1.13/dist/g2.min.js"></script>
+<script src="https://unpkg.com/@antv/data-set@0.11.8/build/data-set.js"></script>
+<script>
+
+
+    function draw_overtrend(){
+        $("#c2").html("")
+        fetch('processed.json')
+            .then(res => res.json())
+            .then(data => {
+                const ds = new DataSet.DataSet();
+                const dv = ds.createView().source(data);
+                dv.transform({
+                    type: 'sort',
+                    callback(a, b) {
+                        return a.day - b.day;
+                    }
+                });
+                const trend_chart = new G2.Chart({
+                    container: 'c2',
+                    autoFit: true,
+                    height: 1500,
+                    padding: [20, 10, 20, 20]
+                });
+
+                trend_chart.data(dv.rows);
+
+                trend_chart.scale({
+                    people_vaccinated_per_hundred: {
+                        min: 0,
+                        max: 55,
+                    },
+                    day: {
+                        range: [0, 1],
+                        ticks: ['0', '86']
+                    }
+                });
+
+                trend_chart.axis('day', {
+                    grid: {
+                        line: {
+                            style: {
+                                lineDash: [0, 0],
+                                lineWidth: 1,
+                                stroke: '#e9e9e9'
+                            }
+                        }
+                    },
+                    label: {
+                        rotate: Math.PI / 4,
+                    }
+                });
+
+                trend_chart.tooltip({
+                    showCrosshairs: true,
+                    // shared: true,
+                    showTitle: false
+                });
+
+                trend_chart.facet('list', {
+                    fields: ['country'],
+                    cols: 22,
+                    columnTitle: {
+                        style: {
+                            fontSize: 12,
+                            textAlign: 'center',
+                            fontWeight: 300,
+                            fill: '#8d8d8d'
+                        }
+                    },
+                    showTitle: false,
+                    padding: [5, 5, 5, 5],
+                    eachView: (view, facet) => {
+                        view.line()
+                            .position('day*people_vaccinated_per_hundred')
+                            .shape('smooth')
+                            .style({ opacity: 0.8 })
+                            .tooltip('country*day*people_vaccinated_per_hundred');
+                    },
+                });
+                trend_chart.render();
+            });
+    }
+</script>
+<script>
+    const data = [
+        { name: 'Asia', value: 4641054775, vaccine: 0.10 },
+        { name: 'Africa', value: 1340598147, vaccine: 0.013 },
+        { name: 'Europe', value: 747636026, vaccine: 0.28  },
+        { name: 'Oceania', value: 43111704, vaccine: 0.051 },
+        { name: 'North America', value: 592072212, vaccine: 0.45 },
+        { name: 'South America', value: 430759766, vaccine: 0.16  },
+    ];
+
+
+    let max = 1;
+
+    // 自定义 other 的图形，增加两条线
+    G2.registerShape('interval', 'slice-shape', {
+        draw(cfg, container) {
+            const points = cfg.points;
+            const origin = cfg.data;
+            const percent = origin.vaccine / max;
+            const xWidth = points[2].x - points[1].x;
+            let width = xWidth;
+
+            const group = container.addGroup();
+
+            let path = [];
+            const offset = 0.65
+            path.push(['M', points[0].x + offset, points[0].y]);
+            path.push(['L', points[1].x + offset, points[1].y]);
+            path.push(['L', points[0].x + width, points[2].y]);
+            path.push(['L', points[0].x + width, points[3].y]);
+            path.push('Z');
+            path = this.parsePath(path)
+
+            group.addShape('path', {
+                attrs: {
+                    // stroke: 'l(0) 0:#ffffff 0.85:#ffffff 1:#000000',
+                    stroke: '#000000',
+                    strokeOpacity: 0.2,
+                    lineWidth: 1,
+                    path,
+                },
+            })
+
+            width = xWidth * percent * 0.5;
+
+            path = [];
+
+            path.push(['M', points[0].x + offset, points[0].y]);
+            path.push(['L', points[1].x + offset, points[1].y]);
+            path.push(['L', points[0].x + width + offset, points[2].y]);
+            path.push(['L', points[0].x + width + offset, points[3].y]);
+            path.push('Z');
+            path = this.parsePath(path)
+
+            group.addShape('path', {
+                attrs: {
+                    fill: cfg.color,
+                    stroke: '#929292',
+                    lineWidth: 0,
+                    path,
+                },
+            })
+
+            return group
+        },
+    });
+
+
+    function draw_dist_cont(){
+        $("#distribution-continent").html("")
+        const chart = new G2.Chart({
+            container: 'distribution-continent',
+            autoFit: true,
+            height: 800,
+        });
+
+        // dist_chart.clear();
+
+        chart.coordinate('theta', {
+            radius: 0.75,
+        });
+
+        // chart.coordinate({
+        //     radius: 0.75,
+        // });
+
+        chart.data(data);
+
+        chart.tooltip({
+            showTitle: false,
+            showMarkers: false,
+        });
+
+        chart.interval()
+            .adjust('stack')
+            .position('value')
+            .color('name')
+            .shape('slice-shape')
+            .style({
+                stroke: '#c6c6c6',
+                lineWidth: 3,
+            })
+            .label('name', {
+                offset: '20%',
+                layout: {
+                    type: 'fixed-overlap',
+                },
+                background: {
+                    style: {
+                        fill: '#fff',
+                        fillOpacity: '0.25',
+                        radius: 2,
+                    },
+                    padding: 5,
+                },
+                content: (obj) => {return obj.name + "\nVaccination: " + obj.vaccine*100 + "%"  + "\nPopulation: " + obj.value;},
+            });
+
+        chart.annotation().text({
+            position: ['50%', '50%'],
+            content: 'Total Vaccination (Global)\n8.7%',
+            style: {
+                fontSize: 20,
+                fill: '#8c8c8c',
+                textAlign: 'center',
+            },
+        });
+
+        chart.interaction('element-active');
+
+        chart.render();
+    }
+</script>
+<script>
+  function draw_tree_map(){
+      $("#distribution-treemap").html("");
+      fetch('treemap-data.json')
+          .then((res) => res.json())
+          .then((mobiles) => {
+              const { DataView } = new DataSet.DataSet;
+              // 会通过子节点累加 value 值，所以设置为 0
+              mobiles.forEach(function(mobile) {
+                  mobile.value = null;
+              });
+              const data = {
+                  name: 'root',
+                  children: mobiles,
+              };
+              const dv = new DataSet.DataView();
+              dv.source(data, {
+                  type: 'hierarchy',
+              }).transform({
+                  field: 'value',
+                  type: 'hierarchy.treemap',
+                  tile: 'treemapResquarify',
+                  as: ['x', 'y'],
+              });
+              // 将 DataSet 处理后的结果转换为 G2 接受的数据
+              const nodes = [];
+              for (const node of dv.getAllNodes()) {
+                  if (!node.children) {
+                      const eachNode = {
+                          name: node.data.name,
+                          x: node.x,
+                          y: node.y,
+                          depth: node.depth,
+                          value: node.value,
+                      };
+                      if (!node.data.brand && node.parent) {
+                          eachNode.brand = node.parent.data.brand;
+                      } else {
+                          eachNode.brand = node.data.brand;
+                      }
+
+                      nodes.push(eachNode);
+                  }
+              }
+              const chart = new G2.Chart({
+                  container: 'distribution-treemap',
+                  autoFit: true,
+                  height: 650,
+                  padding: 0,
+              });
+              chart.coordinate().scale(1, -1); // 习惯性最小的在最下面
+              chart.data(nodes);
+              chart.axis(false);
+              chart.legend(false);
+              chart.tooltip({
+                  showTitle: false,
+                  showMarkers: false
+              });
+              chart
+                  .polygon()
+                  .position('x*y')
+                  .color('brand')
+                  .tooltip('name*value', function(name, value) {
+                      return {
+                          name,
+                          value,
+                      };
+                  })
+                  .style({
+                      lineWidth: 1,
+                      stroke: '#fff',
+                  })
+                  .label(
+                      'name',
+                      {
+                          offset: 0,
+                          style: {
+                              textBaseline: 'middle',
+                              fill: '#000',
+                              shadowBlur: 10,
+                              shadowColor: '#fff',
+                          },
+                          layout: {
+                              type: 'limit-in-shape'
+                          }
+                      }
+                  );
+              chart.interaction('element-active');
+              chart.render();
+          });
+  }
+</script>
 </body>
 
 </html>

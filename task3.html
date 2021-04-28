@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="c1"></div>
+
+
+<!-- Introduce online resources, select the g2 version you need and replace the version variable -->
+<script src="https://gw.alipayobjects.com/os/lib/antv/g2/4.1.13/dist/g2.min.js"></script>
+<script>
+    const data = [
+        { name: 'Asia', value: 4641054775, vaccine: 0.063 },
+        { name: 'Africa', value: 1340598147, vaccine: 0.009 },
+        { name: 'Europe', value: 747636026, vaccine: 0.18  },
+        { name: 'Oceania', value: 43111704, vaccine: 0.021 },
+        { name: 'North America', value: 592072212, vaccine: 0.31 },
+        { name: 'South America', value: 430759766, vaccine: 0.095  },
+    ];
+
+
+    let max = 1;
+
+    // 自定义 other 的图形，增加两条线
+    G2.registerShape('interval', 'slice-shape', {
+        draw(cfg, container) {
+            const points = cfg.points;
+            const origin = cfg.data;
+            const percent = origin.vaccine / max;
+            const xWidth = points[2].x - points[1].x;
+            let width = xWidth;
+
+            const group = container.addGroup();
+
+            let path = [];
+            const offset = 0.65
+            path.push(['M', points[0].x + offset, points[0].y]);
+            path.push(['L', points[1].x + offset, points[1].y]);
+            path.push(['L', points[0].x + width, points[2].y]);
+            path.push(['L', points[0].x + width, points[3].y]);
+            path.push('Z');
+            path = this.parsePath(path)
+
+            group.addShape('path', {
+                attrs: {
+                    // stroke: 'l(0) 0:#ffffff 0.85:#ffffff 1:#000000',
+                    stroke: '#000000',
+                    strokeOpacity: 0.2,
+                    lineWidth: 1,
+                    path,
+                },
+            })
+
+            width = xWidth * percent * 0.5;
+
+            path = [];
+
+            path.push(['M', points[0].x + offset, points[0].y]);
+            path.push(['L', points[1].x + offset, points[1].y]);
+            path.push(['L', points[0].x + width + offset, points[2].y]);
+            path.push(['L', points[0].x + width + offset, points[3].y]);
+            path.push('Z');
+            path = this.parsePath(path)
+
+            group.addShape('path', {
+                attrs: {
+                    fill: cfg.color,
+                    stroke: '#929292',
+                    lineWidth: 0,
+                    path,
+                },
+            })
+
+            return group
+        },
+    });
+
+    const chart = new G2.Chart({
+        container: 'c1',
+        autoFit: true,
+        height: 800,
+    });
+
+    chart.coordinate('theta', {
+        radius: 0.75,
+    });
+
+    // chart.coordinate({
+    //     radius: 0.75,
+    // });
+
+    chart.data(data);
+
+    chart.tooltip({
+        showTitle: false,
+        showMarkers: false,
+    });
+
+    chart.interval()
+        .adjust('stack')
+        .position('value')
+        .color('name')
+        .shape('slice-shape')
+        .style({
+            stroke: '#c6c6c6',
+            lineWidth: 3,
+        })
+        .label('name', {
+            offset: '20%',
+            layout: {
+                type: 'fixed-overlap',
+            },
+            background: {
+                style: {
+                    fill: '#fff',
+                    fillOpacity: '0.25',
+                    radius: 2,
+                },
+                padding: 5,
+            },
+            content: (obj) => {return obj.name + "\nVaccination: " + obj.vaccine*100 + "%"  + "\nPopulation: " + obj.value;},
+        });
+
+    chart.annotation().text({
+        position: ['50%', '50%'],
+        content: 'Total Vaccination (Global)\n8.7%',
+        style: {
+            fontSize: 20,
+            fill: '#8c8c8c',
+            textAlign: 'center',
+        },
+    });
+
+    chart.interaction('element-active');
+
+    chart.render();
+</script>
+</body>
+</html>
