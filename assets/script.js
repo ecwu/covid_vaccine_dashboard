@@ -24,7 +24,7 @@ bottom = Split(['#top-row', '#bottom-row'], {
 // bottom.destroy()
 
 function switchView(view){
-    let listofview = ['progress-view', 'distribution-view', 'solution-view']
+    let listofview = ['home-view' ,'progress-view', 'distribution-view', 'solution-view']
     for (var i = 0; i < listofview.length; i++) {
         $('#'+listofview[i]).addClass('d-none')
     }
