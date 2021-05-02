@@ -241,7 +241,6 @@
     let topMainViewFigure = null
     let topSecViewFigure = null
     function endDragUpdate(){
-        console.log("updating something")
         if (topMainViewFigure !== null) {
             topMainViewFigure();
         }
@@ -611,7 +610,7 @@
                         height: 150,
                     });
 
-                    console.log(detailData)
+                    // console.log(detailData)
 
                     const country = new DataSet.DataView().source(detailData);
                     country.transform({
@@ -620,7 +619,7 @@
                             return row.name == ev.data.data.name;
                         },
                     });
-                    console.log(country.rows)
+                    // console.log(country.rows)
 
                     detail.source(country.rows);
 
@@ -669,7 +668,7 @@
                         as: ['longitude', 'latitude']
                     });
 
-                console.log(userDv.rows);
+                // console.log(userDv.rows);
 
                 const userView = chart.createView();
                 userView.data(userDv.rows);
@@ -770,7 +769,7 @@
                     $("#detail").html("")
                     $("#nation-name").html(ev.data.data.name)
 
-                    console.log(ev.data.data.name);
+                    // console.log(ev.data.data.name);
                     const detail = new G2.Chart({
                         container: 'detail',
                         autoFit: true,
@@ -784,7 +783,7 @@
                             return row.name == ev.data.data.name;
                         },
                     });
-                    console.log(country.rows)
+                    // console.log(country.rows)
 
                     detail.source(country.rows);
 
@@ -833,7 +832,7 @@
                         as: ['longitude', 'latitude']
                     });
 
-                console.log(userDv.rows);
+                // console.log(userDv.rows);
 
                 const userView = chart.createView();
                 userView.data(userDv.rows);
@@ -954,7 +953,7 @@
                     $("#detail").html("")
                     $("#nation-name").html(ev.data.data.name)
 
-                    console.log(ev.data.data.name);
+                    // console.log(ev.data.data.name);
                     const detail = new G2.Chart({
                         container: 'detail',
                         autoFit: true,
@@ -968,7 +967,7 @@
                             return row.name == ev.data.data.name;
                         },
                     });
-                    console.log(country.rows)
+                    // console.log(country.rows)
 
                     detail.source(country.rows);
 
@@ -1017,7 +1016,7 @@
                         as: ['longitude', 'latitude']
                     });
 
-                console.log(userDv.rows);
+                // console.log(userDv.rows);
 
                 const userView = chart.createView();
                 userView.data(userDv.rows);
@@ -1157,7 +1156,7 @@
                     $("#detail").html("")
                     $("#nation-name").html(ev.data.data.name)
 
-                    console.log(ev.data.data.name);
+                    // console.log(ev.data.data.name);
                     const detail = new G2.Chart({
                         container: 'detail',
                         autoFit: true,
@@ -1171,7 +1170,7 @@
                             return row.name == ev.data.data.name;
                         },
                     });
-                    console.log(country.rows)
+                    // console.log(country.rows)
 
                     detail.source(country.rows);
 
@@ -1220,7 +1219,7 @@
                         as: ['longitude', 'latitude']
                     });
 
-                console.log(userDv.rows);
+                // console.log(userDv.rows);
 
                 const userView = chart.createView();
                 userView.data(userDv.rows);
