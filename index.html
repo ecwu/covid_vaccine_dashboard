@@ -20,7 +20,10 @@
 <body>
 
 <nav class="navbar navbar-expand navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">COVID-19 Vaccination Dashboard <sup>[©️ 2021 World Peace]</sup></a>
+  <a class="navbar-brand" href="#">COVID-19 Vaccination Dashboard</a>
+  <div class="text-success">Current View: <span id="navbar-view-name">Overall Situation View</span> /
+    Data Update Time: <span id="navbar-data-time">2021-04-28</span>
+  </div>
 </nav>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -249,11 +252,16 @@
             topSecViewFigure();
         }
     }
+    function updateNavbar(name, time){
+        $("#navbar-data-time").html(time)
+        $("#navbar-view-name").html(name)
+    }
 </script>
 <script>
     // Graph for overall trend of vaccination
     function draw_overtrend() {
         topMainViewFigure = draw_overtrend
+        updateNavbar("Vaccination Overall Trends", "2021-03-XX");
         $("#c2").html("")
         fetch('processed.json')
             .then(res => res.json())
@@ -403,6 +411,7 @@
 
     function draw_dist_cont() {
         topMainViewFigure = draw_dist_cont
+        updateNavbar("Vaccination Distribution by Continents", "2021-04-28");
         $("#distribution-continent").html("")
         const chart = new G2.Chart({
             container: 'distribution-continent',
@@ -473,6 +482,7 @@
     // Code for distribution treemap chart
     function draw_tree_map() {
         topMainViewFigure = draw_tree_map
+        updateNavbar("Vaccines Purchase Record", "2021-04-28");
         $("#distribution-treemap").html("");
         fetch('treemap-data.json')
             .then((res) => res.json())
@@ -568,6 +578,7 @@
 <script>
     function draw_mainmap(){
         topMainViewFigure = draw_mainmap
+        updateNavbar("Global COVID-19 Cases and Vaccination", "2021-04-28");
         $("#map").html("")
         fetch('https://gw.alipayobjects.com/os/antvdemo/assets/data/world.geo.json')
             .then(res => res.json())
@@ -732,6 +743,7 @@
         $("#solution-map").html("")
     }
     function draw_solution_case(){
+        updateNavbar("Distribution Solution ~ By Total Cases", "2021-04-28");
         topMainViewFigure = draw_solution_case
         draw_solution_prepare();
         fetch('https://gw.alipayobjects.com/os/antvdemo/assets/data/world.geo.json')
@@ -917,6 +929,7 @@
 
     function draw_solution_newcase(){
         topMainViewFigure = draw_solution_newcase
+        updateNavbar("Distribution Solution ~ By New Cases", "2021-04-28");
         draw_solution_prepare();
         fetch('https://gw.alipayobjects.com/os/antvdemo/assets/data/world.geo.json')
             .then(res => res.json())
@@ -1120,6 +1133,7 @@
 
     function draw_solution_population(){
         topMainViewFigure = draw_solution_population
+        updateNavbar("Distribution Solution ~ By Population", "2021-04-28");
         draw_solution_prepare();
         fetch('https://gw.alipayobjects.com/os/antvdemo/assets/data/world.geo.json')
             .then(res => res.json())
