@@ -1,4 +1,4 @@
-const detailData = [
+const PdetailData = [
         // { name: "China", value: 0.2, type: 'P Rate'},
         // { name: "China", value: 0.01, type: 'V Rate'},
 

@@ -1,4 +1,4 @@
-const userData = [
+const PuserData = [
         // { name: 'Afghanistan', cases: 59225.0, vacc: 240000.0, vaccRate: 7.37725061857478e-05, population: 38928341.0, populationRate: 0.0016361370875494334},
         { name: 'Afghanistan', cases: 59225.0, vacc: 240000.0, vaccRate: 7.37725061857478e-05, population: 38928341.0, populationRate: 0.0016361370875494334, PRateOnVRate: 4.4710665752235235, casesRate: 0.00012456009727200326, CRateOnVRate: 0.7556868235998744, RawPRateOnVRate: 22.17814158881755, RawCRateOnVRate: 1.68843521404004, PRateMinusVRate: 0.0015623645813636856, CRateMinusVRate: 5.078759108625546e-05 },
         { name: 'Africa', cases: 4523057.0, vacc: 17047882.0, vaccRate: 0.0052402707512454105, population: 1340598113.0, populationRate: 0.0563446125838778, PRateOnVRate: 3.426564413915087, casesRate: 0.009512746642242553, CRateOnVRate: 0.8602206006408809, RawPRateOnVRate: 10.752233092247545, RawCRateOnVRate: 1.815315867024951, PRateMinusVRate: 0.05110434183263239, CRateMinusVRate: 0.004272475890997143 },

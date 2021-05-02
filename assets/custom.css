@@ -89,3 +89,7 @@ div > .row .col {
     position: absolute;
     z-index: 50;
 }
+
+#phases{
+    height: 680px;
+}

@@ -1,4 +1,4 @@
-const detailData = [
+const CdetailData = [
         { name: 'Afghanistan', value: 0.00012456009727200326, type: 'C Rate'},
         { name: 'Afghanistan', value: 7.37725061857478e-05, type: 'V Rate'},
         { name: 'Africa', value: 0.009512746642242553, type: 'C Rate'},
