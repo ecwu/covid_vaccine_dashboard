@@ -5,42 +5,101 @@
   <title>Title</title>
 </head>
 <body>
-<div id="container"></div>
+<div id="vacc-stacked"></div>
 
 
 <!-- Introduce online resources, select the g2 version you need and replace the version variable -->
 <script src="https://gw.alipayobjects.com/os/lib/antv/g2/4.1.13/dist/g2.min.js"></script>
 <script type="text/javascript" src="https://unpkg.com/@antv/g2plot@latest/dist/g2plot.min.js"></script>
+<!--<script>-->
+<!--    fetch('https://gist.githubusercontent.com/adamusmani95/e1e5134051640a2cbbf54261a59e4281/raw/47cc386c887a1bc375cd31647c1d32dd85fe0ff4/phases.json')-->
+<!--        .then((res) => res.json())-->
+<!--        .then((data) => {-->
+<!--            const linePlot = new G2Plot.Line('container', {-->
+<!--                data,-->
+<!--                xField: 'Date',-->
+<!--                yField: 'NoVaccines',-->
+<!--                seriesField: 'Stage',-->
+<!--                yAxis: {-->
+<!--                    label: {-->
+<!--                        // formatter: (v) => `${(v / 10e8).toFixed(1)} `,-->
+
+<!--                    },-->
+<!--                },-->
+<!--                legend: {-->
+<!--                    position: 'top',-->
+<!--                },-->
+<!--                smooth: true,-->
+<!--                // @TODO 后续会换一种动画方式-->
+<!--                animation: {-->
+<!--                    appear: {-->
+<!--                        animation: 'path-in',-->
+<!--                        duration: 1000,-->
+<!--                    },-->
+<!--                },-->
+<!--            });-->
+
+<!--            linePlot.render();-->
+<!--        });-->
+
+<!--</script>-->
+
 <script>
-    fetch('https://gist.githubusercontent.com/adamusmani95/e1e5134051640a2cbbf54261a59e4281/raw/47cc386c887a1bc375cd31647c1d32dd85fe0ff4/phases.json')
-        .then((res) => res.json())
-        .then((data) => {
-            const linePlot = new G2Plot.Line('container', {
-                data,
-                xField: 'Date',
-                yField: 'NoVaccines',
-                seriesField: 'Stage',
-                yAxis: {
-                    label: {
-                        // formatter: (v) => `${(v / 10e8).toFixed(1)} `,
+    const data = [
+        { State: 'Replicating bacterial vector', 'Pre-Clinical': 2, 'Phase 1': 0, 'Phase 1&2': 0, 'Phase 2': 0, 'Phase 2&3': 0, 'Phase 3': 0, 'Approved': 0 },
+        { State: 'Replicating viral vector', 'Pre-Clinical': 17, 'Phase 1': 2, 'Phase 1&2': 4, 'Phase 2': 0, 'Phase 2&3': 0, 'Phase 3': 0, 'Approved': 0 },
+        { State: 'Non-replicating viral vector', 'Pre-Clinical': 18, 'Phase 1': 7, 'Phase 1&2': 1, 'Phase 2': 0, 'Phase 2&3': 0, 'Phase 3': 2, 'Approved': 2 },
+        { State: 'Live attenuated virus', 'Pre-Clinical': 2, 'Phase 1': 2, 'Phase 1&2': 0, 'Phase 2': 0, 'Phase 2&3': 0, 'Phase 3': 0, 'Approved': 0 },
+        { State: 'Inactivated virus', 'Pre-Clinical': 8, 'Phase 1': 1, 'Phase 1&2': 2, 'Phase 2': 2, 'Phase 2&3': 0, 'Phase 3': 7, 'Approved': 0 },
+        { State: 'Virus-like particle', 'Pre-Clinical': 20, 'Phase 1': 0, 'Phase 1&2': 1, 'Phase 2': 0, 'Phase 2&3': 1, 'Phase 3': 0, 'Approved': 0 },
+        { State: 'Protein subunit', 'Pre-Clinical': 59, 'Phase 1': 4, 'Phase 1&2': 9, 'Phase 2': 4, 'Phase 2&3': 1, 'Phase 3': 5, 'Approved': 0 },
+        { State: 'RNA', 'Pre-Clinical': 23, 'Phase 1': 2, 'Phase 1&2': 4, 'Phase 2': 0, 'Phase 2&3': 0, 'Phase 3': 1, 'Approved': 2 },
+        { State: 'DNA', 'Pre-Clinical': 13, 'Phase 1': 2, 'Phase 1&2': 3, 'Phase 2': 0, 'Phase 2&3': 2, 'Phase 3': 1, 'Approved': 0 },
+    ];
 
-                    },
-                },
-                legend: {
-                    position: 'top',
-                },
-                smooth: true,
-                // @TODO 后续会换一种动画方式
-                animation: {
-                    appear: {
-                        animation: 'path-in',
-                        duration: 1000,
-                    },
-                },
-            });
+    const ds = new DataSet.DataSet();
+    const dv = ds.createView().source(data);
+    dv.transform({
+        type: 'fold',
+        fields: ['Pre-Clinical', 'Phase 1', 'Phase 1&2', 'Phase 2', 'Phase 2&3', 'Phase 3', 'Approved'], // 展开字段集
+        key: '年龄段', // key字段
+        value: '人口数量', // value字段
+        retains: ['State'], // 保留字段集，默认为除fields以外的所有字段
+    });
+    // 数据被加工成 {State: 'WY', 年龄段: '小于5岁', 人口数量: 25635}
 
-            linePlot.render();
-        });
+    const chart = new G2.Chart({
+        container: 'vacc-stacked',
+        autoFit: true,
+        height: 500,
+    });
+
+    chart.coordinate().transpose();
+
+    chart.data(dv.rows);
+    chart.scale('人口数量', { nice: true });
+
+    chart.axis('State', {
+        label: {
+            offset: 12,
+        },
+    });
+
+    chart.tooltip({
+        shared: true,
+        showMarkers: false,
+    });
+
+    chart
+        .interval()
+        .adjust('stack')
+        .position('State*人口数量')
+        .color('年龄段');
+
+    chart.interaction('active-region');
+
+    chart.theme({ "styleSheet": { "brandColor": "#025DF4", "paletteQualitative10": ["#025DF4", "#DB6BCF", "#2498D1", "#BBBDE6", "#4045B2", "#21A97A", "#FF745A", "#007E99", "#FFA8A8", "#2391FF"], "paletteQualitative20": ["#025DF4", "#DB6BCF", "#2498D1", "#BBBDE6", "#4045B2", "#21A97A", "#FF745A", "#007E99", "#FFA8A8", "#2391FF", "#FFC328", "#A0DC2C", "#946DFF", "#626681", "#EB4185", "#CD8150", "#36BCCB", "#327039", "#803488", "#83BC99"] } });
+    chart.render();
 
 </script>
 </body>
