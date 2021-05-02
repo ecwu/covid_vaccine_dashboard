@@ -12,6 +12,9 @@ Split(['#tlh-col', '#trh-col'], {
             'flex-basis': gutterSize + 'px',
         }
     },
+    onDragEnd: function (){
+        endDragUpdate();
+    }
 })
 
 // Top and Bottom
