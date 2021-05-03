@@ -1,5 +1,5 @@
 // Top Row Side-by-Side
-Split(['#tlh-col', '#trh-col'], {
+let mainsplitview = Split(['#tlh-col', '#trh-col'], {
     sizes: [75, 25],
     minSize: 300,
     elementStyle: function (dimension, size, gutterSize) {
@@ -18,7 +18,7 @@ Split(['#tlh-col', '#trh-col'], {
 })
 
 // Top and Bottom
-bottom = Split(['#top-row', '#bottom-row'], {
+let bottomsplitview = Split(['#top-row', '#bottom-row'], {
     sizes: [90, 10],
     minSize: 100,
     direction: 'vertical'
@@ -33,3 +33,23 @@ function switchView(view){
     }
     $('#'+view).removeClass('d-none')
 }
+
+// Reserved function for EndDrag callback, update the layout for top figures
+let topMainViewFigure = null
+let topSecViewFigure = null
+function endDragUpdate(){
+    if (topMainViewFigure !== null) {
+        topMainViewFigure();
+    }
+    if (topSecViewFigure !== null) {
+        topSecViewFigure();
+    }
+}
+// Update topbar name
+function updateNavbar(name, time){
+    $("#navbar-data-time").html(time)
+    $("#navbar-view-name").html(name)
+}
+// View status variable
+let mainViewHeight = 0
+let secViewHeight = 0
