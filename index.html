@@ -623,6 +623,10 @@
                         type: 'log',
                     });
 
+                    detail.legend({
+                        position: 'top',
+                    });
+
                     detail.tooltip({
                         showMarkers: false
                     });
@@ -677,9 +681,9 @@
                         alias: 'Active Cases'
                     }
                 });
-                chart.scale('tvalue', {
-                    type: 'log',
-                });
+                // chart.scale('tvalue', {
+                //     type: 'log',
+                // });
                 userView.scale({
                     tvacc: {
                         alias: 'Vaccination'
