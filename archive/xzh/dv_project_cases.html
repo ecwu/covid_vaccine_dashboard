@@ -25,8 +25,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js" integrity="sha512-XKa9Hemdy1Ui3KSGgJdgMyYlUg1gM+QhL6cnlyTe2qzMCYm4nAZ1PsVerQzTTXzonUR+dmswHqgJPuwCq1MaAg==" crossorigin="anonymous"></script>
 <script src="https://gw.alipayobjects.com/os/lib/antv/g2/4.1.13/dist/g2.min.js"></script>
 <script src="https://unpkg.com/@antv/data-set"></script>
-<script type="text/javascript" src="detailData_population.js"></script>
-<script type="text/javascript" src="userData_population.js"></script>
+<script type="text/javascript" src="../../data/detailData_cases.js"></script>
+<script type="text/javascript" src="../../data/userData_cases.js"></script>
 
 <script>
   fetch('https://gw.alipayobjects.com/os/antvdemo/assets/data/world.geo.json')
@@ -118,7 +118,7 @@
     });
 
     // 可视化用户数据
-    
+
     const userDv = ds.createView()
       .source(userData)
       .transform({
@@ -186,10 +186,16 @@
       }
     });
 
+    userView.scale({
+      casesRate: {
+        alias: 'Cases Rate'
+      }
+    });
+
     userView.polygon()
       .position('longitude*latitude')
-      .color('PRateMinusVRate', ['#008A5D','#ffffff','#F51D27'])
-      .tooltip('name*cases*casesRate*vacc*vaccRate*population*populationRate*PRateMinusVRate')
+      .color('CRateMinusVRate', ['#008A5D','#ffffff','#F51D27'])
+      .tooltip('name*cases*casesRate*vacc*vaccRate*population*populationRate*CRateMinusVRate')
       .style({
         fillOpacity: 0.85
       })

@@ -80,10 +80,7 @@
   <div id="top-row" class="d-flex">
     <div id="tlh-col" class="split content">
       <div id="home-view" class="full-size">
-<!--        <div class="d-flex full-size">-->
-          <!--          <img src="percentage-of-vaccinatio.svg" class="img-fluid" alt="Responsive image">-->
-          <div id="map" class="full-size"></div>
-<!--        </div>-->
+        <div id="map" class="full-size"></div>
       </div>
       <div id="progress-view" class="d-none full-size">
         <div id="c2" class="full-size"></div>
@@ -120,7 +117,6 @@
     </div>
 
     <div id="trh-col" class="split content">
-<!--      <img src="vacc-info.png" class="img-fluid" alt="Responsive image">-->
       <div id="vaccine-view" class="full-size">
         <nav>
           <div class="nav nav-tabs" id="nav-vacc-tab" role="tablist">
@@ -246,7 +242,7 @@
         topMainViewFigure = draw_overtrend
         updateNavbar("Vaccination Overall Trends", "2021-04-25");
         $("#c2").html("")
-        fetch('processedv3.json')
+        fetch('data/processedv3.json')
             .then(res => res.json())
             .then(data => {
                 const ds = new DataSet.DataSet();
@@ -467,7 +463,7 @@
         topMainViewFigure = draw_tree_map
         updateNavbar("Vaccines Purchase Record", "2021-04-28");
         $("#distribution-treemap").html("");
-        fetch('treemap-data.json')
+        fetch('data/treemap-data.json')
             .then((res) => res.json())
             .then((mobiles) => {
                 const {DataView} = new DataSet.DataSet;
@@ -511,7 +507,7 @@
                 const chart = new G2.Chart({
                     container: 'distribution-treemap',
                     autoFit: true,
-                    height: 650,
+                    height: 680,
                     padding: 0,
                 });
                 chart.coordinate().scale(1, -1); // 习惯性最小的在最下面
@@ -556,8 +552,8 @@
             });
     }
 </script>
-<script type="text/javascript" src="detailData.js"></script>
-<script type="text/javascript" src="userData.js"></script>
+<script type="text/javascript" src="data/detailData.js"></script>
+<script type="text/javascript" src="data/userData.js"></script>
 <script>
     function draw_mainmap(){
         topMainViewFigure = draw_mainmap
@@ -719,12 +715,12 @@
     }
     draw_mainmap()
 </script>
-<script type="text/javascript" src="xzh/detailData_cases.js"></script>
-<script type="text/javascript" src="xzh/userData_cases.js"></script>
-<script type="text/javascript" src="xzh/detailData_newcases.js"></script>
-<script type="text/javascript" src="xzh/userData_newcases.js"></script>
-<script type="text/javascript" src="xzh/detailData_population.js"></script>
-<script type="text/javascript" src="xzh/userData_population.js"></script>
+<script type="text/javascript" src="data/detailData_cases.js"></script>
+<script type="text/javascript" src="data/userData_cases.js"></script>
+<script type="text/javascript" src="data/detailData_newcases.js"></script>
+<script type="text/javascript" src="data/userData_newcases.js"></script>
+<script type="text/javascript" src="data/detailData_population.js"></script>
+<script type="text/javascript" src="data/userData_population.js"></script>
 <script>
     function draw_solution_prepare(){
         $("#solution-map").html("")
